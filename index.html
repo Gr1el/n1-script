@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Helpdesk - Interno</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #1e293b;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding-top: 30px;
+    }
+
+    .sidebar button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 15px 20px;
+      text-align: left;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .sidebar button:hover,
+    .sidebar button.active {
+      background-color: #334155;
+    }
+
+    .content {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #1e293b;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 15px;
+      display: block;
+    }
+
+    input, select {
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      margin-top: 5px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    #mensagem {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-left: 5px solid #3b82f6;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      white-space: pre-wrap;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100px;
+      }
+      .sidebar button {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <button onclick="showSection('acesso')" class="active">Acesso</button>
+    <button onclick="showSection('contato')">Contato</button>
+    <button onclick="showSection('grupo')">Grupo de E-mail</button>
+  </div>
+
+  <div class="content">
+    <div id="acesso" class="section active">
+      <h1>Acesso</h1>
+
+      <label for="usuario">Nome do usuário:</label>
+      <input type="text" id="usuario" value="Beatriz Couto De Oliveira" oninput="atualizarMensagem()" />
+
+      <label for="nomeAtendente">Seu nome:</label>
+      <select id="nomeAtendente" onchange="atualizarMensagem()">
+        <option>Gabriel</option>
+        <option>Daniel</option>
+        <option>Davi</option>
+        <option>Gustavo</option>
+      </select>
+
+      <div id="mensagem"></div>
+    </div>
+
+    <div id="contato" class="section">
+      <h1>Contato</h1>
+      <p>Informações de contato da empresa.</p>
+    </div>
+
+    <div id="grupo" class="section">
+      <h1>Grupo de E-mail</h1>
+      <p>Informações sobre os grupos de e-mail.</p>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => {
+        sec.classList.remove('active');
+      });
+      document.querySelectorAll('.sidebar button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function atualizarMensagem() {
+      const usuario = document.getElementById('usuario').value;
+      const atendente = document.getElementById('nomeAtendente').value;
+
+      const mensagem =
+`Bom dia ${usuario}! Sou o ${atendente} do Helpdesk.
+Motivo do contato referente ao chamado: 
+Possui disponibilidade para realizar atendimento do chamado agora?`;
+
+      document.getElementById('mensagem').textContent = mensagem;
+    }
+
+    atualizarMensagem();
+  </script>
+</body>
+</html>
